@@ -1,0 +1,86 @@
+CREATE TABLE roles (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- users table
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `fullname` varchar(255) DEFAULT NULL,
+  `username` varchar(100) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(30) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `role_id` int DEFAULT NULL,
+  `mfa_enabled` varchar(1) DEFAULT 'Y',
+  `is_active` tinyint(1) DEFAULT '0',
+  `is_verified` tinyint(1) DEFAULT '0',
+  `is_locked` tinyint(1) DEFAULT '0',
+  `failed_login_count` int DEFAULT '0',
+  `lock_until` datetime DEFAULT NULL,
+  `last_login_datetime` datetime DEFAULT NULL,
+  `last_logout_datetime` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `is_deleted` int DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+);
+
+-- refresh tokens (store hashed refresh tokens)
+CREATE TABLE refresh_tokens (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  token_hash VARCHAR(255) NOT NULL,
+  expires_at DATETIME NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  revoked TINYINT(1) DEFAULT 0,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- email verification tokens
+CREATE TABLE email_verifications (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  token_hash VARCHAR(255) NOT NULL,
+  expires_at DATETIME NOT NULL,
+  used TINYINT(1) DEFAULT 0
+);
+
+-- password reset tokens
+CREATE TABLE password_resets (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  token_hash VARCHAR(255) NOT NULL,
+  created_at DATETIME NOT NULL,
+  expires_at DATETIME NOT NULL,
+  used TINYINT(1) DEFAULT 0
+);
+
+-- mfa options and tokens
+CREATE TABLE otp_verifications (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  otp VARCHAR(6) NOT NULL,
+  type ENUM('email','sms') NOT NULL,
+  expires_at DATETIME NOT NULL,
+  verified_at DATETIME NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  used TINYINT(1) DEFAULT 0,
+  attempt_count INT DEFAULT 0
+);
+
+-- user sessions
+CREATE TABLE user_sessions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  token VARCHAR(255) NOT NULL,
+  ip_address VARCHAR(45) DEFAULT NULL,
+  login_datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
+  logout_datetime DATETIME DEFAULT NULL,
+  session_active TINYINT(1) DEFAULT 1,
+  user_auth_type varchar(50),
+  user_role  varchar(50)
+);

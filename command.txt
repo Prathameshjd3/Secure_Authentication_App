@@ -1,0 +1,32 @@
+Installation steps for node.js(express.js) and React(vite)
+
+1) React(vite) installation => C:\Users\Prathamesh Dhanawade\OneDrive\Desktop\Projects\ReactNodejs\AuthenticationAuthorization
+                            => npm create vite@latest frontend
+                            => cd frontend
+                            => npm install
+                            => npm run dev
+                            => npm install axios
+                            => npm install react-router-dom
+                            => npm install bootstrap
+                            => npm install react-toastify
+
+############################################################################################################################
+
+2) Node (express) installation => C:\Users\Prathamesh Dhanawade\OneDrive\Desktop\Projects\ReactNodejs\AuthenticationAuthorization
+                            => cd backend
+                            => npm init -y
+                            => npm install express
+                            => npm install mysql2
+                            => npm install cors
+                            => npm install dotenv
+                            => npm install -D nodemon     -- adds dev dependency in package.json
+                            => npm install bcrypt
+                            => npm install cookie-parser
+                            => npm install mailtrap
+                            => npm install crypto
+                            => npm install nodemailer      ---- Email
+                            => npm install twilio        ---- SMS ----- HRXXJJW1RWYJ4KWZ7Z9R1ZDK
+                            => npm install passport     ---- OAUTH
+                            => npm install passport-google-oauth20      ---- OAUTH Google
+                            => npm install express-session
+                            
